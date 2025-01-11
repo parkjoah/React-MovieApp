@@ -1,11 +1,34 @@
 import Button from "./Button";
 import styles from "./App.module.css";
+import { useState, useEffect, use } from "react";
 
 function App() {
+  const [counter, setValue] = useState(0); //counter 초깃값 0 설정
+  const [keyword, setKeyword] = useState("");
+  const onClick = () => setValue((prev) => prev + 1);
+  const onChange = (event) => {
+    setKeyword(event.target.value);
+  };
+  console.log("i run all the time");
+  useEffect(() => {
+    console.log("call the API......");
+  }, []);
+
+  useEffect(() => {
+    console.log("SEARCH FOR", keyword);
+  }, [keyword]);
+
   return (
     <div>
-      <h1 className={styles.title}>welcome back!</h1>
-      <Button text={"Continue"} />
+      <input
+        onChange={onChange}
+        value={keyword}
+        type="text"
+        placeholder="Search here...."
+      ></input>
+      <h1 className={styles.title}>{counter}</h1>
+      <button onClick={onClick}>Click me !</button>
+      <Button onClick={onClick} text={"click me"} />
     </div>
   );
 }
