@@ -1,7 +1,14 @@
 import Button from "./Button";
 import styles from "./App.module.css";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 
+function Hello() {
+  useEffect(() => {
+    console.log("created :)");
+    return () => console.log("destroyed :(");
+  }, []);
+  return <h1>Hello</h1>;
+}
 function App() {
   const [counter, setValue] = useState(0); //counter 초깃값 0 설정
   const [keyword, setKeyword] = useState("");
@@ -18,8 +25,17 @@ function App() {
     console.log("SEARCH FOR", keyword);
   }, [keyword]);
 
+  // cleanup
+  const [showing, setShowing] = useState(false);
+  const onShow = () => {
+    setShowing((prev) => !prev);
+  };
   return (
     <div>
+      <div>
+        {showing ? <Hello /> : null}
+        <button onClick={onShow}>{showing ? "Hide" : "Show"}</button>
+      </div>
       <input
         onChange={onChange}
         value={keyword}
